@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # IMPORTANT: trailing slash required
+          issuer-uri: https://dev-tdcrwac6yjaq4fye.ca.auth0.com/
+
+app:
+  auth0:
+    audience: https://dev-tdcrwac6yjaq4fye.ca.auth0.com/api/v2/
+
+cors:
+  allowed-origins: http://localhost:3000
