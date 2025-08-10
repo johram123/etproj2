@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0/client";
+import { useUser } from "@auth0/nextjs-auth0";
 import LoginButton from "../components/LoginButton";
 
 export default function Home() {
