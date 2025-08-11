@@ -3,6 +3,7 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import Profile from "../../components/Profile";
 import ProtectedApiTest from "../../components/ProtectedApiTest";
+import JwtTokenDisplay from "../../components/JwtTokenDisplay";
 
 export default withPageAuthRequired(function ProtectedPage() {
   return (
@@ -14,6 +15,11 @@ export default withPageAuthRequired(function ProtectedPage() {
           <div>
             <h2 className="text-xl font-medium mb-6">User Profile</h2>
             <Profile />
+          </div>
+
+          <div>
+            <h2 className="text-xl font-medium mb-6">JWT Tokens</h2>
+            <JwtTokenDisplay />
           </div>
 
           <div>

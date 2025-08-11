@@ -1,6 +1,6 @@
-package com.example.api;
+package com.example.auth0_backend.api;
 
-import org.springframkework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 

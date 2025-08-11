@@ -1,4 +1,4 @@
-package com.example.auth0backend.security;
+package com.example.auth0_backend.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
