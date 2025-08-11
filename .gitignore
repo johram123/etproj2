@@ -1,0 +1,80 @@
+# =============================
+# Frontend (Next.js)
+# =============================
+
+# dependencies
+/frontend/node_modules
+/frontend/.pnp
+/frontend.pnp.*
+/frontend/.yarn/*
+!/frontend/.yarn/patches
+!/frontend/.yarn/plugins
+!/frontend/.yarn/releases
+!/frontend/.yarn/versions
+
+# testing
+/frontend/coverage
+
+# next.js build outputs
+/frontend/.next/
+/frontend/out/
+
+# production build
+/frontend/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+/frontend/.env*
+.env*
+
+# vercel deployment
+/frontend/.vercel
+
+# typescript cache
+/frontend/*.tsbuildinfo
+/frontend/next-env.d.ts
+
+# =============================
+# Backend (Spring Boot / Java)
+# =============================
+
+# Maven / Gradle build outputs
+/backend/target/
+/backend/build/
+/backend/out/
+
+# Maven wrapper JAR
+/backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDE/project files (Java IDEs)
+.backend/.classpath
+/backend/.project
+/backend/.settings/
+/backend/.idea/
+/backend/.vscode/
+*.iml
+
+# Logs
+/backend/*.log
+/backend/logs/
+
+# =============================
+# OS-specific files
+# =============================
+Thumbs.db
+.DS_Store
+
+# =============================
+# General editor swap/backup files
+# =============================
+*.swp
+*~
