@@ -5,6 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.core.AuthenticationException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.oauth2.core.*;
@@ -35,9 +40,20 @@ public class SecurityConfig {
         .requestMatchers("/api/protected").authenticated()
         .anyRequest().permitAll()
       )
-      .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+      .oauth2ResourceServer(oauth2 -> oauth2
+        .authenticationEntryPoint(loggingAuthEntryPoint())
+        .jwt(Customizer.withDefaults())
+      );
 
     return http.build();
+  }
+
+  @Bean
+  AuthenticationEntryPoint loggingAuthEntryPoint() {
+    return (HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) -> {
+      System.err.println("[AUTH-ERROR] URI=" + request.getRequestURI() + " msg=" + authException.getMessage());
+      response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized: " + authException.getMessage());
+    };
   }
 
   @Bean
@@ -48,7 +64,7 @@ public class SecurityConfig {
     // Default validators
     OAuth2TokenValidator<Jwt> defaultValidator = JwtValidators.createDefaultWithIssuer(issuer);
 
-    // Add required audience validation
+    // Enforce audience validation (token must contain configured audience)
     OAuth2TokenValidator<Jwt> audienceValidator = token -> {
       if (token.getAudience() != null && token.getAudience().contains(audience)) {
         return OAuth2TokenValidatorResult.success();

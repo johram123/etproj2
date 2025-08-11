@@ -20,10 +20,31 @@ export default function ProtectedApiTest() {
     setApiResponse("");
 
     try {
-      // For now, just show that we would call the API with a token
-      setApiResponse(
-        "Token-based API call would be made here. Spring Boot backend integration pending."
-      );
+      // Get access token securely (not displayed to user)
+      const tokenResponse = await fetch("/api/auth/token");
+
+      if (!tokenResponse.ok) {
+        throw new Error("Failed to get access token");
+      }
+
+      const { accessToken } = await tokenResponse.json();
+
+      // Call protected backend API with token
+      const response = await fetch("http://localhost:8080/api/protected", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setApiResponse(JSON.stringify(data, null, 2));
+      } else {
+        throw new Error(
+          `Backend API call failed: ${response.status} ${response.statusText}`
+        );
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -60,7 +81,7 @@ export default function ProtectedApiTest() {
     setApiResponse("");
 
     try {
-      const response = await fetch("http://localhost:8080/api/protected");
+      const response = await fetch("http://localhost:8080/api/public");
 
       if (response.ok) {
         const data = await response.text();
@@ -104,7 +125,7 @@ export default function ProtectedApiTest() {
             disabled={loading}
             className="px-4 py-2 bg-red-700 text-white rounded hover:bg-red-600 disabled:bg-gray-700 disabled:cursor-not-allowed transition-colors"
           >
-            {loading ? "Loading..." : "No Auth Test"}
+            {loading ? "Loading..." : "Public API Test"}
           </button>
         </div>
 
@@ -125,13 +146,14 @@ export default function ProtectedApiTest() {
 
         <div className="text-sm text-gray-400 space-y-1">
           <p>
-            <strong>Spring Boot API:</strong> Calls your backend server
+            <strong>Spring Boot API:</strong> Calls your backend protected
+            endpoint
           </p>
           <p>
             <strong>Local Protected API:</strong> Calls Next.js protected route
           </p>
           <p>
-            <strong>No Auth Test:</strong> Should fail with 401/403
+            <strong>Public API Test:</strong> Tests backend public endpoint
           </p>
         </div>
       </div>

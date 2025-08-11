@@ -1,0 +1,3 @@
+com\example\auth0_backend\security\SecurityConfig.class
+com\example\auth0_backend\api\DemoController.class
+com\example\auth0_backend\Auth0BackendApplication.class
