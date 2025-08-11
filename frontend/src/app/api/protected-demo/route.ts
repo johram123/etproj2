@@ -14,7 +14,10 @@ export async function GET(req: NextRequest) {
       endpoint: "/api/protected-demo",
       timestamp: new Date().toISOString(),
     });
-  } catch (e:any) {
-    return NextResponse.json({ error: e?.message || "Unauthorized" }, { status: 401 });
+  } catch (e: any) {
+    return NextResponse.json(
+      { error: e?.message || "Unauthorized" },
+      { status: 401 }
+    );
   }
 }
